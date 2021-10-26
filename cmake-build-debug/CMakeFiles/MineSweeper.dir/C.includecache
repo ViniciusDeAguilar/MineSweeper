@@ -9,4 +9,8 @@
 C:/Users/User/CLionProjects/MineSweeper/main.c
 stdio.h
 -
+stdlib.h
+-
+time.h
+-
 

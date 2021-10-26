@@ -68,72 +68,59 @@ void draw(){
 }
 
 // Cell validation
+int cellValidation(int x1 ,int y1){
+    if((x1 < 0 || x1 > size) || (y1 < 0 || y1 > size)){
+        printf("Cell %d %d don't exists!", x1, y1);
+
+        return 0;
+    }
+    return 1;
+}
+
 // Radar
 void radar(){
     int radarPoints = 0;
-    int xx = 0;
-    int yy = 0;
+    int xx = 0, xi = -1, xf = 2;
+    int yy = 0, yi = -1 , yf = 2;
 
-    for(x = 0; x < 10; x++){
-        for(y = 0; y < 10; y++){
+    for(x = 0; x < size; x++){
+        for(y = 0; y < size; y++){
 
-            if(x == 0){
-                if (y == 0) {
-                    for(xx = 0; xx < 2; xx++){
-                        for(yy = 0; yy < 2; yy++){
-                            if(matriz[x + xx][y + yy].bomb == 1){
-                                radarPoints++;
-                            }
-                        }
-                    }
-                }
-                if (y == size - 1) {
-                    for(xx = 0; xx < 2; xx++) {
-                        for(yy = -1; yy < 1; yy++) {
-                            if(matriz[x + xx][y + yy].bomb == 1){
-                                radarPoints++;
-                            }
-                        }
-                    }
-                }
+            if(x + xx < 0){
+                xi = 0;
             }
-            else if(y == 0){ // x-- y++
-                if(x == size - 1){
-                    for(xx = 0; xx < 2; xx++){
-                        for(yy = -1; yy < 1; yy++){
-                            if(matriz[x + xx][y + yy].bomb == 1){
-                                radarPoints++;
-                            }
-                        }
-                    }
-                }
-            } else if (y == size - 1) { // x-- y--
-                if (x == size - 1) {
-                    for(xx = -1; xx < 1; xx++){
-                        for(yy = -1; y < 1; yy++){
-                            if(matriz[x + xx][y + yy].bomb == 1){
-                                radarPoints++;
-                            }
-                        }
-                    }
-                }
+            else if(x + xx > size){
+                xf = 1;
             }
-            else {
-                for (xx = -1; xx < 2; xx++) {
-                    for (yy = -1; yy < 2; yy++) {
 
-                        if (matriz[x + xx][y + yy].bomb == 1) {
-                            radarPoints++;
-                        }
+            if(y + yy < 0){
+                yi = 0;
+            }
+            else if(y + yy > size){
+                yf = 1;
+            }
+
+            for(xx = xi; xx < xf; xx++){
+                for(yy = yi; yy < yf; yy++){
+
+                    if(matriz[x + xx][y + yy].bomb){
+                        radarPoints++;
                     }
                 }
             }
 
             matriz[x][y].radar = radarPoints;
             radarPoints = 0;
+
+            xi = -1;
+            xf = 2;
+            yi = -1;
+            yf = 2;
         }
     }
 
+    matriz[x][y].radar = radarPoints;
+    radarPoints = 0;
 }
 
 // Main

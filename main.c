@@ -48,29 +48,27 @@ void bombLocations(int number){
 //Draw
 void draw(){
     for(int i = 0; i < size; i++){
-        printf("--------------------------------------------\n");
+        printf("-----------------------------------------\n");
 
         for(int j = 0; j < size; j++){
-            printf("| %d ", matriz[i][j].bomb);
+//            printf("| %d ", matriz[i][j].bomb);
+            if(matriz[i][j].bomb == 1 ){
+                printf("| x ");
+            }
+            else{
+                printf("| %d ", matriz[i][j].radar);
+            }
         }
-//            if(matriz[i][j].bomb == 1){
-//                printf("| x ");
-//            }
-//            else{
-//                printf("| %d ", matriz[i][j].radar);
-//            }
-//        }
-
         printf("|\n");
     }
 
-    printf("--------------------------------------------\n");
+    printf("-----------------------------------------\n");
 }
 
 // Cell validation
 int cellValidation(int x1 ,int y1){
-    if((x1 < 0 || x1 > size) || (y1 < 0 || y1 > size)){
-        printf("Cell %d %d don't exists!", x1, y1);
+    if((x1 < 0 || x1 >= size) || (y1 < 0 || y1 >= size)){
+//        printf("Cell %d %d don't exists!\n", x1, y1);
 
         return 0;
     }
@@ -86,36 +84,40 @@ void radar(){
     for(x = 0; x < size; x++){
         for(y = 0; y < size; y++){
 
-            if(x + xx < 0){
-                xi = 0;
-            }
-            else if(x + xx > size){
-                xf = 1;
-            }
+//            if(x + xx <= 0){
+//                xi = 0;
+//            }
+//            else if(x + xx >= size){
+//                xf = 1;
+//            }
+//
+//            if(y + yy <= 0){
+//                yi = 0;
+//            }
+//            else if(y + yy >= size){
+//                yf = 1;
+//            }
 
-            if(y + yy < 0){
-                yi = 0;
-            }
-            else if(y + yy > size){
-                yf = 1;
-            }
+            for (xx = xi; xx < xf; xx++) {
+                for (yy = yi; yy < yf; yy++) {
 
-            for(xx = xi; xx < xf; xx++){
-                for(yy = yi; yy < yf; yy++){
+                   if(cellValidation(x + xx, y + yy) == 1){
+                       if (matriz[x + xx][y + yy].bomb == 1) {
+                           radarPoints++;
+                       }
+                   }
 
-                    if(matriz[x + xx][y + yy].bomb){
-                        radarPoints++;
-                    }
                 }
             }
 
             matriz[x][y].radar = radarPoints;
             radarPoints = 0;
-
-            xi = -1;
-            xf = 2;
-            yi = -1;
-            yf = 2;
+//
+//            xi = -1;
+//            xf = 2;
+//
+//            yi = -1;
+//            yf = 2;
         }
     }
 
@@ -130,7 +132,7 @@ int main(){
     bombLocations(10);
     radar();
     draw();
-
+    scanf("%d");
     return 0;
 }
 

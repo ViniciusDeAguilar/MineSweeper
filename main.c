@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h> 
+#include <time.h>
 
 // Cell structuration
 typedef struct{
@@ -52,8 +52,14 @@ void draw(){
 
         for(int j = 0; j < size; j++){
 //            printf("| %d ", matriz[i][j].bomb);
-            if(matriz[i][j].bomb == 1 ){
+            if(matriz[i][j].open == 0){
+                printf("|   ");
+            }
+            else if(matriz[i][j].bomb == 1){
                 printf("| x ");
+            }
+            else if(matriz[i][j].radar == 0){
+                printf("| @ ");
             }
             else{
                 printf("| %d ", matriz[i][j].radar);
@@ -69,7 +75,6 @@ void draw(){
 int cellValidation(int x1 ,int y1){
     if((x1 < 0 || x1 >= size) || (y1 < 0 || y1 >= size)){
 //        printf("Cell %d %d don't exists!\n", x1, y1);
-
         return 0;
     }
     return 1;
@@ -104,14 +109,28 @@ void radar(){
     radarPoints = 0;
 }
 
+// Game function
+int game(){
+    initialize();
+    bombLocations(size);
+    radar();
+    int c ,d;
+    while(1){
+        draw();
+        printf("\n\n Type the coordenates: ");
+        scanf("%d %d", &c ,&d);
+
+        c--;
+        d--;
+
+        if(cellValidation(c, d)){
+            matriz[c][d].open = 1;
+        }
+    }
+}
 // Main
 int main(){
-
-    initialize();
-    bombLocations(10);
-    radar();
-    draw();
-    scanf("%d");
+    game();
     return 0;
 }
 

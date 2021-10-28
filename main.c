@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
+#include <time.h> 
 
 // Cell structuration
 typedef struct{
@@ -78,46 +78,25 @@ int cellValidation(int x1 ,int y1){
 // Radar
 void radar(){
     int radarPoints = 0;
-    int xx = 0, xi = -1, xf = 2;
-    int yy = 0, yi = -1 , yf = 2;
+    int xx = 0;
+    int yy = 0;
 
     for(x = 0; x < size; x++){
         for(y = 0; y < size; y++){
 
-//            if(x + xx <= 0){
-//                xi = 0;
-//            }
-//            else if(x + xx >= size){
-//                xf = 1;
-//            }
-//
-//            if(y + yy <= 0){
-//                yi = 0;
-//            }
-//            else if(y + yy >= size){
-//                yf = 1;
-//            }
-
-            for (xx = xi; xx < xf; xx++) {
-                for (yy = yi; yy < yf; yy++) {
+            for (xx = -1; xx < 2; xx++) {
+                for (yy = -1; yy < 2; yy++) {
 
                    if(cellValidation(x + xx, y + yy) == 1){
                        if (matriz[x + xx][y + yy].bomb == 1) {
                            radarPoints++;
                        }
                    }
-
                 }
             }
 
             matriz[x][y].radar = radarPoints;
             radarPoints = 0;
-//
-//            xi = -1;
-//            xf = 2;
-//
-//            yi = -1;
-//            yf = 2;
         }
     }
 

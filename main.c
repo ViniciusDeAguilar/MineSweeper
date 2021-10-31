@@ -7,6 +7,7 @@ typedef struct{
     int bomb;
     int open;
     int radar;
+    int neutralized;
 } Cell;
 
 // Global variables
@@ -24,6 +25,7 @@ void initialize(){
             matriz[x][y].bomb = 0;
             matriz[x][y].open = 0;
             matriz[x][y].radar = 0;
+            matriz[x][y].neutralized = 0;
         }
     }
 }
@@ -115,6 +117,7 @@ int game(){
     bombLocations(size);
     radar();
     int c ,d;
+
     while(1){
         draw();
         printf("\n\n Type the coordenates: ");
@@ -124,6 +127,16 @@ int game(){
         d--;
 
         if(cellValidation(c, d)){
+            if(matriz[c][d].bomb == 1){
+                matriz[c][d].open = 1;
+
+                draw();
+                printf("BOOOM! \n");
+                printf("%d %d WAS A BOMB\n", c , d);
+                scanf("%c");
+
+                break;
+            }
             matriz[c][d].open = 1;
         }
     }

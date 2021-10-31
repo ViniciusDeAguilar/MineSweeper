@@ -132,7 +132,7 @@ int game(){
 
                 draw();
                 printf("BOOOM! \n");
-                printf("%d %d WAS A BOMB\n", c , d);
+                printf("%d %d WAS A BOMB\n", ++c , ++d);
                 scanf("%c");
 
                 break;
